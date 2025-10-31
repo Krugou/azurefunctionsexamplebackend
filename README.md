@@ -11,7 +11,14 @@ A modern Azure Functions backend built with TypeScript using the latest v4 progr
   - HTTP GET trigger (Query parameters)
   - HTTP POST trigger (JSON body handling)
   - RESTful API (GET, POST, PUT, DELETE)
+  - Advanced User Management API (with utilities and models)
   - Timer triggers (Scheduled tasks)
+  - Queue trigger (Asynchronous message processing)
+- **Best Practices**:
+  - Organized code structure (models, utils)
+  - Type-safe utilities and helpers
+  - Error handling patterns
+  - API response standardization
 - **Modern Node.js** - Built for Node.js 20 LTS
 
 ## 📋 Prerequisites
@@ -137,6 +144,12 @@ npm run lint
 npm run lint:fix
 ```
 
+### Prepare for Deployment
+```bash
+npm run predeploy
+```
+This runs clean, build, and lint in sequence.
+
 ### Clean Build Artifacts
 ```bash
 npm run clean
@@ -144,7 +157,9 @@ npm run clean
 
 ## 🌐 Deployment to Azure
 
-### Using Azure CLI
+For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
+
+### Quick Deploy Using Azure CLI
 
 1. Login to Azure:
 ```bash
@@ -194,15 +209,30 @@ func azure functionapp publish myFunctionApp
 ```
 azurefunctionsexamplebackend/
 ├── src/
-│   ├── functions.ts           # HTTP trigger functions
-│   └── timerFunctions.ts      # Timer trigger functions
-├── dist/                      # Compiled JavaScript (generated)
-├── node_modules/             # Dependencies
-├── .eslintrc.json           # ESLint configuration
-├── .gitignore               # Git ignore rules
-├── host.json                # Azure Functions host configuration
-├── local.settings.json      # Local development settings
-├── package.json             # Project dependencies and scripts
+│   ├── functions.ts              # Basic HTTP trigger examples
+│   ├── advancedFunctions.ts      # Advanced User Management API
+│   ├── timerFunctions.ts         # Timer trigger examples
+│   ├── queueFunctions.ts         # Queue trigger example
+│   ├── models/
+│   │   └── types.ts              # TypeScript interfaces and types
+│   └── utils/
+│       └── helpers.ts            # Utility functions
+├── dist/                         # Compiled JavaScript (generated)
+├── node_modules/                 # Dependencies
+├── .vscode/                      # VS Code configuration
+│   ├── extensions.json           # Recommended extensions
+│   ├── launch.json               # Debug configuration
+│   ├── settings.json             # Editor settings
+│   └── tasks.json                # Build tasks
+├── .env.example                  # Environment variables template
+├── .funcignore                   # Files to exclude from deployment
+├── .gitignore                    # Git ignore rules
+├── CONTRIBUTING.md               # Contribution guidelines
+├── DEPLOYMENT.md                 # Detailed deployment guide
+├── eslint.config.js              # ESLint configuration
+├── host.json                     # Azure Functions host configuration
+├── local.settings.json           # Local development settings (not in git)
+├── package.json                  # Project dependencies and scripts
 ├── tsconfig.json            # TypeScript configuration
 └── README.md                # This file
 ```
@@ -225,17 +255,34 @@ TypeScript compiler configuration with strict settings for better type safety.
 
 ### HTTP Triggers
 
-#### `hello` (GET)
+#### `hello` (GET /api/hello)
 Simple GET endpoint that accepts a name query parameter and returns a greeting.
 
-#### `data` (POST)
+#### `data` (POST /api/data)
 POST endpoint that accepts JSON data and returns a confirmation.
 
-#### `items` (GET, POST, PUT, DELETE)
+#### `items` (GET, POST, PUT, DELETE /api/items)
 RESTful API endpoint supporting CRUD operations:
 - `GET /api/items` - List all items
 - `GET /api/items/{id}` - Get a specific item
 - `POST /api/items` - Create a new item
+- `PUT /api/items/{id}` - Update an existing item
+- `DELETE /api/items/{id}` - Delete an item
+
+#### `users` (GET, POST, PUT, DELETE /api/users)
+Advanced User Management API demonstrating best practices:
+- `GET /api/users` - List all users
+- `GET /api/users/{id}` - Get a specific user
+- `POST /api/users` - Create a new user (with validation)
+- `PUT /api/users/{id}` - Update an existing user
+- `DELETE /api/users/{id}` - Delete a user
+
+Features:
+- Input validation
+- Email format validation
+- Standardized API responses
+- Error handling
+- Uses helper utilities and type definitions
 - `PUT /api/items/{id}` - Update an existing item
 - `DELETE /api/items/{id}` - Delete an item
 
@@ -246,6 +293,17 @@ Runs every 5 minutes. Can be used for periodic tasks like cleanup or monitoring.
 
 #### `dailyTask`
 Runs daily at midnight UTC. Useful for daily maintenance tasks or reports.
+
+### Queue Triggers
+
+#### `processQueue`
+Processes messages from Azure Storage Queue (`orders-queue`).
+- Demonstrates asynchronous message processing
+- Includes error handling and retry logic
+- Useful for decoupling systems and background processing
+
+#### `enqueue` (POST /api/enqueue)
+Helper endpoint to test queue functionality (mock implementation).
 
 ## 🛡️ Security
 

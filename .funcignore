@@ -1,0 +1,12 @@
+*.js.map
+*.ts.map
+.git*
+.vscode
+local.settings.json
+test
+tsconfig.json
+.eslintrc*
+eslint.config.js
+src
+node_modules
+.DS_Store

@@ -11,6 +11,7 @@
     "start": "func start",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
+    "predeploy": "npm run clean && npm run build && npm run lint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -22,6 +23,9 @@
     "api"
   ],
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "author": "",
   "license": "MIT",
   "dependencies": {
