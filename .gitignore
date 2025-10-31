@@ -134,3 +134,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Azure Functions
+local.settings.json
+*.user
+__blobstorage__
+__queuestorage__
+__azurite_db*__.json
+.python_packages
