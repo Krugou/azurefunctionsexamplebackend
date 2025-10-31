@@ -4,7 +4,7 @@ import { app, InvocationContext, Timer } from '@azure/functions';
  * Timer Trigger Function - Runs on a schedule
  * This function runs every 5 minutes (can be configured)
  * NCRONTAB format: {second} {minute} {hour} {day} {month} {day-of-week}
- * Example: "0 *&#47;5 * * * *" = every 5 minutes
+ * Example schedule: Every 5 minutes
  */
 export async function timerTriggerExample(
   myTimer: Timer,
